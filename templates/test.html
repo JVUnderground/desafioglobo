@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style/style.css')}}">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        <script type="text/javascript" src="{{url_for('static', filename='script/jquery.plugin.js')}}"></script>
+        <script type="text/javascript" src="{{url_for('static', filename='script/jquery.countdown.js')}}"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Porcentagem', 'Votos'],
+            {% for p in dados.participantes %}
+            ['{{p.porcentagem}}%',     {{p.votos}}],
+            {% endfor %}
+            ['', {{dados.total}}]
+        ]);
+
+        var options = {
+            title: '',
+            pieHole: 0.7,
+            pieSliceText: 'label',
+            legend: {
+                position: 'none'
+            },
+            pieStartAngle: 270,
+            slices: {
+                0: {color: 'orange'},
+                1: {color: '#D5D5D5'},
+                2: {color: 'transparent'}
+            },
+            pieSliceTextStyle: {color: "white", fontName: "Helvetica", fontSize: 16, bold: true},
+            tooltip: { trigger: 'none' },
+            backgroundColor: { fill:'transparent' },
+            pieSliceBorderColor: 'transparent',
+            chartArea: { 
+                left: 0, 
+                top: 100, 
+                width: '100%', 
+                height: '100%'
+            },
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+      <h2>QUEM DEVE SER <b>ELIMINADO</b>?</h2>
+      <hr style="width:{{dados.width}}px">
+      <h3><b>Parabéns!</b> Seu voto para <b>X</b> foi enviado com sucesso.</h3>
+      <div id="resultado">
+      {% for p in dados.participantes %}
+      <img class="avatar-resultado" src="{{url_for('static', filename='images/' ~ p.participante.avatar)}}" /> 
+      {% endfor %}
+      <div id="donutchart" style="width: 500px; height: 500px;"></div>
+      <div class="circular"><div>FALTAM<br><span>10:30:47</span><br>PARA ENCERRAR A VOTAÇÃO</div></div>
+  </div>
+  <script>$("span").countdown({until: new Date({{dados.fim}}), layout: "{hn}:{mn}:{sn}"});</script>
+  </body>
+</html>
+

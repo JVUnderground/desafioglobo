@@ -77,7 +77,26 @@ def registrarVoto():
 @app.route('/resultado')
 @db_session
 def pageResultado():
-    return "Página de resultados"
+    ultimo = Paredao.select().order_by(Paredao.inicio.desc()).limit(2)[0]
+    resultados = select((p, count(v)) for p in Participante for v in Voto if p == v.escolha and v.paredao==ultimo).order_by(lambda: count(v))[:][::-1]
+    
+    participantes = []
+    total = sum(zip(*resultados)[1])
+    for r in resultados:
+        participantes.append({
+            "participante": r[0],
+            "votos": r[1],
+            "porcentagem": int(100* float(r[1])/total)
+        })
+    
+    dados = {
+        "paredao": ultimo,
+        "fim": int((ultimo.inicio + dt.timedelta(days=1)).strftime('%s'))*1000,
+        "participantes": participantes,
+        "total": total,
+        "width": 2*PIXWIDTH + 150,
+    }
+    return render_template("test.html", dados=dados)
 
 def horasDesde(tempo):
     delta = dt.datetime.now() - tempo

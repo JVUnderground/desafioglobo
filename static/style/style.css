@@ -58,10 +58,60 @@ h2 {
     font-weight: normal;
     font-family: Helvetica;
 }
+h3 {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 100;
+    font-family: "Helvetica Neue";
+}
 .info {
     font-size: 80%;
     color: #BCBCBC;
 }
 .info b {
     color: #858585;
+}
+.avatar-resultado {
+    float: left;
+    overflow: hidden;
+    margin-right: 75px;
+    margin-left: 75px;
+}
+#resultado {
+    position: relative;
+    width: 900px;
+    margin: auto;
+}
+#donutchart {
+    position: relative;
+    margin: auto;
+    z-index: 1000;
+}
+.circular {
+    display:block;
+    width:300px;
+    height:300px;
+    position: absolute;
+    top: 0px;  /* chartArea top  */
+    left: 300px; /* chartArea left */
+    margin-top: 140px;
+    background: white;
+    border-radius: 50%;
+}
+.circular div {
+    position: relative;
+    width: 60%;
+    height: 60;
+    margin-left: 60px;
+    margin-top: 60px;
+    z-index: 1001;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 12px;
+    color: #A5A5A5;
+}
+.circular div span {
+    font-size: 28px;
+    color: orange;
+    font-weight: 100;
 }
