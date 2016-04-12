@@ -1,0 +1,12 @@
+<!doctype html>
+<head>
+    <title>Resultado detalhado do Paredão</title>
+</head>
+<body>
+    <h1>Resultado detalhado do Paredão de {{dados.inicio}}</h1>
+    <div id="resultados">
+        {% for p in dados.participantes %}
+        <div>{{p.nome}} - {{p.votos}}</div>
+        {% endfor %}
+    </div>
+</body>
